@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deep Book Learning"
+  short_description: "Turn a book into a structured deep learning project."
+  default_prompt: "Use $deep-book-learning-skill to inspect this ebook and build a deep learning project."
