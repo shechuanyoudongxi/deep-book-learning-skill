@@ -32,6 +32,8 @@ Create an open-source Agent Skill that turns a local ebook into a private, resum
 - `chunking`: split by chapter/heading/paragraph before fixed windows.
 - `project`: create output files, state files, and template artifacts.
 - `validation`: fail loudly on missing outputs, empty text, bad JSON, or partial extraction.
+- `knowledge_tree`: validate schema, IDs, provenance, source references, and density rules.
+- `knowledge_tree_renderer`: render `knowledge_tree.json` deterministically into Markdown, offline SVG, and optional PNG.
 
 ## Technology Choices
 
@@ -48,3 +50,13 @@ Research -> requirements -> architecture -> prototype -> core implementation -> 
 ## Acceptance Criteria
 
 Valid `SKILL.md`, project initialization, first-class PDF/EPUB/DOCX/TXT/Markdown paths, explicit extraction status, source index, long-book chunking, resumable state, tests, English/Chinese README, privacy-safe `.gitignore`, and no false claims about GitHub publication before it happens.
+
+## Knowledge Tree Upgrade
+
+The final delivery should prioritize `19_全书知识树.svg` as the primary visual entry point. The data path is:
+
+```text
+book analysis -> synthesis -> .book_learning/knowledge_tree.json -> validation -> Markdown -> SVG -> optional PNG
+```
+
+The renderer is deterministic and local-only. Old projects without `knowledge_tree.json` remain valid and are treated as `knowledge_tree_status=NOT_STARTED`.

@@ -7,6 +7,7 @@ from dataclasses import asdict
 from pathlib import Path
 
 from .chunking import chunk_units, chunks_to_jsonl
+from .knowledge_tree import pending_knowledge_tree
 from .parsers import parse_book
 
 TEMPLATE_FILE_ESCAPES = [
@@ -29,6 +30,7 @@ TEMPLATE_FILE_ESCAPES = [
     r"16_\u53cd\u5e38\u8bc6\u89c2\u70b9\u5e93.md",
     r"17_\u77ed\u89c6\u9891\u9009\u9898\u4e0e\u94a9\u5b50.md",
     r"18_\u4e00\u9875\u7eb8\u5168\u4e66\u5730\u56fe.md",
+    r"19_\u5168\u4e66\u77e5\u8bc6\u6811.md",
 ]
 TEMPLATE_FILES = [name.encode("ascii").decode("unicode_escape") for name in TEMPLATE_FILE_ESCAPES]
 PROJECT_SUFFIX = r"\u6df1\u5ea6\u5b66\u4e60\u9879\u76ee".encode("ascii").decode("unicode_escape")
@@ -66,7 +68,8 @@ def init_project(book_path: str | Path, output: str | Path) -> Path:
         "weak_models": [],
         "cognitive_traps_triggered": [],
         "review_queue": [],
-        "next_actions": ["generate structure map", "extract mental models", "build argument tree"],
+        "knowledge_tree_status": "NOT_STARTED",
+        "next_actions": ["generate structure map", "extract mental models", "build argument tree", "render knowledge tree"],
         "last_updated": None,
     }
     write_json(meta_dir / "manifest.json", manifest)
@@ -74,6 +77,7 @@ def init_project(book_path: str | Path, output: str | Path) -> Path:
     write_json(meta_dir / "source_index.json", source_index)
     write_json(meta_dir / "parsing_report.json", parsed.report.to_dict())
     write_json(meta_dir / "review_queue.json", [])
+    write_json(meta_dir / "knowledge_tree.json", pending_knowledge_tree(title, parsed.report.author))
     (meta_dir / "chunks.jsonl").write_text(chunks_to_jsonl(chunks), encoding="utf-8")
     (meta_dir / "extracted_text.md").write_text(parsed.text, encoding="utf-8")
 

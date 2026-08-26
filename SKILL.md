@@ -25,6 +25,7 @@ When the user provides a book file or path:
    - `references/socratic_tutoring.md` for one-question-at-a-time tutoring and hint ladders.
    - `references/cognitive_traps.md` for risk prediction, error logs, and review queues.
 5. Generate or update Markdown outputs from `templates/` and keep state in `.book_learning/state.json`.
+6. After the synthesis stages are complete, create `.book_learning/knowledge_tree.json`, validate it, then run `scripts/render_knowledge_tree.py <project_dir>` to generate the primary visual entry point.
 
 ## Supported Inputs
 
@@ -38,7 +39,7 @@ Inspect before analysis. Record title, author, format, language if detectable, p
 
 ### Stage 1-6: Build the Learning Substrate
 
-Generate `01_????????.md`, `02_??????.md`, `03_?????.md`, `04_???????.md`, `05_?????????.md`, `06_?????.md`, and `18_???????.md`.
+Generate `01_书籍结构扫描报告.md`, `02_核心心智模型.md`, `03_作者论证树.md`, `04_核心争议与边界.md`, `05_学习前认知风险清单.md`, `06_高阶问题库.md`, and `18_一页纸全书地图.md`.
 
 Use layered synthesis: chunk evidence -> chapter claims/evidence/models/assumptions/counterexamples -> cross-chapter links -> whole-book argument structure -> mental models -> controversies and boundaries. Do not summarize summaries as a substitute for whole-book reasoning.
 
@@ -52,6 +53,20 @@ Score: factual accuracy 20, structure 20, causal understanding 20, boundary awar
 
 Run Feynman explanations, real-world transfer, attack-the-author critique, personal knowledge-system reconstruction, and final assessment. Keep outputs source-traceable and distinguish original content, synthesis, AI inference, and external knowledge.
 
+### Stage 19: Final Visual Knowledge Delivery
+
+Use the existing synthesis files instead of re-summarizing the whole book independently. Prefer `01_书籍结构扫描报告.md`, `02_核心心智模型.md`, `03_作者论证树.md`, `04_核心争议与边界.md`, `10_现实迁移案例.md`, `12_个人知识体系.md`, `18_一页纸全书地图.md`, `.book_learning/manifest.json`, `.book_learning/source_index.json`, and `.book_learning/chunks.jsonl`.
+
+Create `.book_learning/knowledge_tree.json` first. It must be knowledge-centric, not chapter-centric: root question -> core thesis -> 3-8 core modules -> 20-60 key knowledge points in normal books -> details such as summary, mechanism, book example, transfer example, boundary, misconception, provenance, confidence, and real `source_ids`.
+
+Then run `scripts/render_knowledge_tree.py <project_dir>` to generate:
+
+- `19_全书知识树.md`: searchable text fallback and detailed source-traceable tree.
+- `19_全书知识树.svg`: required offline scalable visual delivery.
+- `19_全书知识树.png`: best-effort compatibility image; missing PNG backend must not fail SVG/Markdown delivery.
+
+In the final user-facing response, make `19_全书知识树.svg` the first suggested entry point. Then mention that detailed learning files remain in 00-18.
+
 ### Optional Content Creator Mode
 
 Only enable when the user asks for content strategy, self-media, video topics, hooks, business applications, or counterintuitive viewpoints. Then generate files 14-17 from the templates. Keep this off for ordinary learners.
@@ -62,14 +77,17 @@ Only enable when the user asks for content strategy, self-media, video topics, h
 - `scripts/parse_book.py <book> --output-dir <dir>`: extract normalized text, structure, source index, and parsing report.
 - `scripts/build_manifest.py <parsed-dir>`: rebuild `manifest.json`.
 - `scripts/chunk_book.py <parsed-dir> --max-chars 6000 --overlap 600`: create semantic chunks.
-- `scripts/validate_extraction.py <parsed-dir>`: validate manifest, source index, chunks, and warnings.
+- `scripts/validate_extraction.py <parsed-dir> --knowledge-tree`: validate manifest, source index, chunks, warnings, and the optional knowledge tree.
 - `scripts/init_learning_project.py <book> --output <dir>`: end-to-end project initialization.
+- `scripts/render_knowledge_tree.py <project-dir>`: render `.book_learning/knowledge_tree.json` to Markdown, SVG, and optional PNG.
 
 ## State And Recovery
 
-Use `.book_learning/` in each project: `manifest.json`, `state.json`, `source_index.json`, `parsing_report.json`, `review_queue.json`, and `cache/`.
+Use `.book_learning/` in each project: `manifest.json`, `state.json`, `source_index.json`, `parsing_report.json`, `review_queue.json`, `knowledge_tree.json`, and `cache/`.
 
 On resume, read `state.json`, `manifest.json`, and the latest stage files before continuing. Do not rely only on chat context.
+
+Old projects may not have `knowledge_tree.json` or `knowledge_tree_status`. Treat missing values as `NOT_STARTED`, not as project failure.
 
 ## Stop Conditions
 

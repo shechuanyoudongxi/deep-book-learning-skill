@@ -29,3 +29,5 @@ secrets.*
 
 .example-output/
 .test-tmp/
+.smoke-output/
+.test-deps/

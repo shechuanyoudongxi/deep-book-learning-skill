@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "book": {
+    "title": "精要主义",
+    "author": "测试作者",
+    "root_question": "如何把有限精力投入真正重要的事情？",
+    "core_thesis": "更少，但更好。"
+  },
+  "modules": [
+    {
+      "id": "module_01",
+      "name": "探索",
+      "summary": "识别什么真正重要。",
+      "order": 1,
+      "knowledge_points": [
+        {
+          "id": "kp_001",
+          "name": "选择",
+          "summary": "选择意味着主动决定注意力和行动方向。",
+          "mechanism": "通过承认取舍存在，避免被默认选项牵引。",
+          "importance": "core",
+          "examples": [
+            {
+              "type": "book_case",
+              "summary": "案例：团队把所有任务都当成最高优先级，最后没有真正优先级。",
+              "source_ids": ["u0001-c001"]
+            }
+          ],
+          "boundary": "紧急安全问题不适合慢速探索。",
+          "misconception": "把选择误解为随便放弃。",
+          "source_ids": ["u0001", "u0001-c001"],
+          "provenance": "synthesis from original content",
+          "confidence": 0.86
+        },
+        {
+          "id": "kp_002",
+          "name": "区分重要的少数",
+          "summary": "不是所有机会都有相同价值。",
+          "mechanism": "用机会成本和长期目标筛掉多数噪音。",
+          "importance": "core",
+          "examples": [
+            {
+              "type": "AI-generated transfer example",
+              "summary": "AI 补充迁移案例：创业团队用一周只验证一个关键假设。",
+              "source_ids": []
+            }
+          ],
+          "boundary": "探索早期不能过早收窄。",
+          "misconception": "把少数重要事项理解成只做容易的事。",
+          "source_ids": ["u0002"],
+          "provenance": "AI inference",
+          "confidence": 0.72
+        }
+      ]
+    },
+    {
+      "id": "module_02",
+      "name": "执行",
+      "summary": "让重要的事情更容易发生。",
+      "order": 2,
+      "knowledge_points": [
+        {
+          "id": "kp_003",
+          "name": "缓冲 & 消除障碍 <系统>",
+          "summary": "通过预留余量和移除阻力，让关键行动稳定发生。",
+          "mechanism": "系统设计降低意志力依赖。",
+          "importance": "core",
+          "examples": [
+            {
+              "type": "book_case",
+              "summary": "案例：提前留出缓冲，避免计划被一次延误击穿。",
+              "source_ids": ["u0002-c001"]
+            }
+          ],
+          "boundary": "过度缓冲会拖慢行动。",
+          "misconception": "把系统理解成复杂流程。",
+          "source_ids": ["u0002", "u0002-c001"],
+          "provenance": "original explicit content",
+          "confidence": 0.9
+        }
+      ]
+    }
+  ],
+  "cross_links": [
+    {
+      "from": "kp_001",
+      "to": "kp_003",
+      "type": "enables",
+      "summary": "选择决定执行系统服务于什么。"
+    }
+  ],
+  "generation": {
+    "status": "READY",
+    "warnings": [],
+    "renderer_version": "1.0"
+  }
+}
